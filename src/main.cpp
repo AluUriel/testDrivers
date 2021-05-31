@@ -20,6 +20,10 @@
 #define DIR_PIN_4 21 // Direction
 #define STEP_PIN_4 19 // Step
 
+// pines de los sensores hall
+#define SensorHallPin1 36
+#define SensorHallPin2 39
+
 
 #define SERIAL_PORT Serial1 //HardwareSerial port
 #define DRIVER_ADDRESS 0b00
@@ -120,14 +124,41 @@ void setup()
 void loop()
 {
     uint8_t result;
+    int sensorHallValue;
 
-    // Serial.println("===========Prueba del sensor Hall 1============");
-    // Serial.print("A continuacion, se leerea la salida del sensor hall 1");
-    // int sensorHallValue1;
-    // for (int reading = 0; reading < 50; reading ++){
+    Serial.println("===========Prueba del sensor Hall 1============");
+    Serial.println("A continuacion, se leerea la salida del sensor hall 1\nIngrese una tecla para terminar prueba!");
+    delay(3000);
+    for (;;){
+        sensorHallValue = analogRead(SensorHallPin1);
+        Serial.print("hall sensor 1 reading: ");
+        Serial.println(sensorHallValue);
+        delay(100);
+        if (Serial.available() > 0){
+            while (Serial.available() > 0){
+                Serial.read();
+                delay(3);
+            }
+            break;
+        }
+    }
 
-    // }
-
+    Serial.println("===========Prueba del sensor Hall 2============");
+    Serial.println("A continuacion, se leerea la salida del sensor hall 2\nIngrese una tecla para terminar prueba!");
+    delay(3000);
+    for (;;) {
+        sensorHallValue = analogRead(SensorHallPin2);
+        Serial.print("hall sensor 2 reading: ");
+        Serial.println(sensorHallValue);
+        delay(100);
+        if (Serial.available() > 0) {
+            while (Serial.available() > 0) {
+                Serial.read();
+                delay(3);
+            }
+            break;
+        }
+    }
 
     Serial.println("===========Prueba del motor 1=============");
     result = driver.test_connection();
