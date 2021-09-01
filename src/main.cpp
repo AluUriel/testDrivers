@@ -8,11 +8,11 @@
 
 // Pines de los drivers
 #define EN_PIN 17 // Enable
-#define DIR_PIN_1 32 // Direction
-#define STEP_PIN_1 33 // Step
+#define DIR_PIN_1 14 // Direction
+#define STEP_PIN_1 25 // Step
 
-#define DIR_PIN_2 14 // Direction
-#define STEP_PIN_2 25 // Step
+#define DIR_PIN_2 33 // Direction
+#define STEP_PIN_2 32  // Step
 
 #define DIR_PIN_3 18 // Direction
 #define STEP_PIN_3 13 // Step
@@ -32,6 +32,8 @@
 #define DRIVER_ADDRESS_4 0b11
 
 #define R_SENSE 0.11f
+int a;
+int b;
 
 // SoftwareSerial SERIAL_PORT(SW_RX, SW_TX); // RX, TX
 
@@ -126,7 +128,7 @@ void loop()
     uint8_t result;
     int sensorHallValue;
 
-    Serial.println("===========Prueba del sensor Hall 1============");
+  /*   Serial.println("===========Prueba del sensor Hall 1============");
     Serial.println("A continuacion, se leerea la salida del sensor hall 1\nIngrese una tecla para terminar prueba!");
     delay(3000);
     for (;;){
@@ -158,7 +160,7 @@ void loop()
             }
             break;
         }
-    }
+    } */
 
     Serial.println("===========Prueba del motor 1=============");
     result = driver.test_connection();
@@ -195,10 +197,11 @@ void loop()
     Serial.println("El motor 1 girara 3200 pasos en un sentido...");
     delay(1000);
     move(3200, 1, 1000, true);
+    move(3200, 3, 1000, true);
     Serial.println("El motor 1 girara 3200 pasos en el otro sentido...");
     delay(1000);
     move(3200, 1, 1000, false);
-
+    move(3200, 3, 1000, false);
     Serial.println("===========Prueba del motor 2=============");
     result = driver2.test_connection();
     if (result == 0) {
@@ -290,7 +293,15 @@ void loop()
     Serial.println("microstteps setteado:  8");
 
     driver4.rms_current(600);
+    a = driver4.microsteps();
+    b = 8;
+    while(a =! 8)
+    {
     driver4.microsteps(8);
+    }
+    
+    
+    
 
     Serial.print("Corriente actual del driver 4: ");
     Serial.println(driver4.rms_current());
